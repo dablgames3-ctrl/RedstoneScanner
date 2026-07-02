@@ -1,0 +1,36 @@
+name: Java Compiler
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        
+    - name: Download Paper API
+      run: wget https://papermc.io -O paper-api.jar
+
+    - name: Compile Java
+      run: |
+        mkdir -p bin
+        javac -d bin -cp paper-api.jar src/main/java/com/example/redstonescanner/RedstoneScannerPlugin.java
+        cp src/main/resources/plugin.yml bin/
+        cd bin
+        jar cfM ../RedstoneScanner.jar .
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: RedstoneScanner-Jar
+        path: RedstoneScanner.jar
