@@ -1,0 +1,13 @@
+name: RedstoneScanner
+version: '1.0'
+main: com.example.redstonescanner.RedstoneScannerPlugin
+api-version: '1.21'
+commands:
+  scanredstone:
+    description: Генерирует и сканирует чанки вокруг на редстоун.
+    permission: redstonescanner.use
+    usage: /scanredstone [радиус]
+permissions:
+  redstonescanner.use:
+    description: Позволяет использовать сканер.
+    default: op
